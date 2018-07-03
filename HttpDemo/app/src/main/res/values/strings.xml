@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HttpDemo</string>
+    <string name="login">Login</string>
+    <string name="login_username">UserName</string>
+    <string name="login_password">Password</string>
+    <string name="login_enter">Sign In</string>
 </resources>
