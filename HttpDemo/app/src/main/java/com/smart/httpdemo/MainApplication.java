@@ -8,6 +8,8 @@ import android.support.annotation.StringRes;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+import com.smart.httpdemo.tool.OkhttpConfiguration;
+import com.smart.httpdemo.tool.OkhttpUtils;
 
 public class MainApplication extends Application {
     private static final String TAG = MainApplication.class.getSimpleName();
@@ -22,6 +24,8 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        OkhttpConfiguration.Builder builder = new OkhttpConfiguration.Builder();
+        OkhttpUtils.getInstance().init(builder.build());
         Utils.init(this);
         this.registerActivityLifecycleCallbacks(new SmartActivityLifeCycleCallback());
         mLogConfig = LogUtils.getConfig();
