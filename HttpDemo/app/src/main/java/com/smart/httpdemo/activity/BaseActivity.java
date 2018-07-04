@@ -48,4 +48,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {}
 }

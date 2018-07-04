@@ -24,11 +24,21 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         OkhttpConfiguration.Builder builder = new OkhttpConfiguration.Builder();
         OkhttpUtils.getInstance().init(builder.build());
-        Utils.init(this);
         this.registerActivityLifecycleCallbacks(new SmartActivityLifeCycleCallback());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        Utils.init(this);
         mLogConfig = LogUtils.getConfig();
+        mLogConfig.setBorderSwitch(false);
+        mLogConfig.setLogHeadSwitch(false);
+        mLogConfig.setSingleTagSwitch(false);
         LogUtils.dTag(TAG, mLogConfig);
     }
 

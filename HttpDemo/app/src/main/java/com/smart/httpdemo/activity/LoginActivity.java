@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.smart.httpdemo.R;
 
 public class LoginActivity extends BaseActivity {
@@ -21,6 +22,11 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        LogUtils.dTag(TAG, "login start finish");
     }
 
     private void initView() {
