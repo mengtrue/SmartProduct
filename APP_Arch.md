@@ -108,7 +108,18 @@ APP 基本流程框架如下：
 
 [Android 应用架构](http://zqlite.com/2017/05/23/guaide-to-app-arch/) 
 
-[AndroidOne Github](https://github.com/devinhu/androidone) 
-
 [QuickDevFramework Github](https://github.com/ShonLin/QuickDevFramework) 
 
+[okhttp](https://github.com/square/okhttp) 
+
+[gson](https://github.com/google/gson) 
+
+[AndPermission](https://github.com/yanzhenjie/AndPermission) 
+
+[AndroidUtilCode](https://github.com/Blankj/AndroidUtilCode) | [使用](https://blankj.com/2016/07/31/android-utils-code/) 
+
+[loginsmooth](https://github.com/wenzhihao123/Android-loginsmooth-master) 
+
+[OkHttpFinal](https://github.com/pengjianbo/OkHttpFinal) 
+
+LitePal 数据库 [教程](https://blog.csdn.net/guolin_blog/article/category/2522725) [Github](https://github.com/LitePalFramework/LitePal) 
