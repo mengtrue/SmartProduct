@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string-array name="gtk_area">
+        <item>全部地区</item>
+        <item>光电园一期</item>
+        <item>光电园二期</item>
+        <item>科技园</item>
+        <item>越南</item>
+    </string-array>
+
+    <string-array name="gtk_serial">
+        <item>全部系列</item>
+        <item>HB</item>
+    </string-array>
+</resources>
