@@ -63,15 +63,21 @@ public class ResultData {
 
     public static class OrgData {
         private String name;
+        private String subName;
         private String value;
 
-        public OrgData(String name, String value) {
+        public OrgData(String name, String subName, String value) {
             this.name = name;
+            this.subName = subName;
             this.value = value;
         }
 
         public String getName() {
             return name;
+        }
+
+        public String getSubName() {
+            return subName;
         }
 
         public String getValue() {
@@ -93,7 +99,7 @@ public class ResultData {
             int size = data.size();
             OrgData[] orgs = new OrgData[size/2];
             for (int i = 0; i < size/2; i++) {
-                orgs[i] = new OrgData(data.get(i), data.get(size/2 + i) + "%");
+                orgs[i] = new OrgData(data.get(i), data.get(i), data.get(size/2 + i) + "%");
             }
             return orgs;
         }

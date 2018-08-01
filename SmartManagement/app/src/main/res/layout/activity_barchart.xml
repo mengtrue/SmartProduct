@@ -44,6 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:id="@+id/org_title"
+            android:textAppearance="?android:textAppearanceLargePopupMenu"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
             android:id="@+id/subbody"
             android:text="制造中心1部"
             android:textAppearance="?android:textAppearanceLargePopupMenu"/>

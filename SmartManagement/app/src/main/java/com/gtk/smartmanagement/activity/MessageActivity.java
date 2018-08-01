@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,6 +42,10 @@ public class MessageActivity extends BaseActivity {
         setContentView(R.layout.activity_message);
         mTitle = findViewById(R.id.title);
         mTitle.setText(R.string.user_message);
+
+        ImageView info = findViewById(R.id.info);
+        info.setVisibility(View.GONE);
+
         mNetworkError = findViewById(R.id.network_error);
         mRefreshButton = findViewById(R.id.refresh);
         mRefreshButton.setOnClickListener(new View.OnClickListener() {

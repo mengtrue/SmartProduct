@@ -67,6 +67,8 @@ public class ResultAnalyseActivity extends BaseActivity {
 
     private Handler mHandler;
 
+    private int index = 0;
+    private String orgTitle, orgSubTitle = null;
     private boolean posting = false;
 
     @Override
@@ -80,13 +82,21 @@ public class ResultAnalyseActivity extends BaseActivity {
         setContentView(R.layout.result_analyse);
 
         mHandler = new Handler();
+        index = 0;
+        orgTitle = null;
+        orgSubTitle = null;
         initView();
         initViewPager();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (index != 0) {
+            index--;
+            getData();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -224,6 +234,8 @@ public class ResultAnalyseActivity extends BaseActivity {
         mRecyclerView.setVisibility(View.GONE);
         network_error.setVisibility(View.GONE);
         mProgressView.setVisibility(View.VISIBLE);
+        sp_area.setEnabled(false);
+        sp_serial.setEnabled(false);
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -237,9 +249,23 @@ public class ResultAnalyseActivity extends BaseActivity {
 
     private void debugData() {
         orgDatas = new ResultData.OrgData[6];
+        String name, subName = null;
+
         for (int i = 0; i < 6; i++) {
-            orgDatas[i] = new ResultData.OrgData("制造" + (i + 1) + "部",
+            if (index == 0) {
+                name = "BU" + (i + 1);
+                subName = null;
+            } else {
+                name = orgTitle;
+                if (index == 1)
+                    subName = "第" + convertString(i + 1) + "制造中心";
+                else if (index == 2)
+                    subName = orgSubTitle + "制造" + convertString(i + 1) + "部";
+            }
+
+            orgDatas[i] = new ResultData.OrgData(name, subName,
                     String.valueOf((new Random().nextInt(100)) % (101)) + "%");
+            orgTitle = name;
         }
 
         for (int i = 0; i < 6; i++) {
@@ -251,6 +277,24 @@ public class ResultAnalyseActivity extends BaseActivity {
         mProgressView.setVisibility(View.GONE);
     }
 
+    private String convertString(int i) {
+        switch (i) {
+            case 1:
+                return "一";
+            case 2:
+                return "二";
+            case 3:
+                return "三";
+            case 4:
+                return "四";
+            case 5:
+                return "五";
+            case 6:
+                return "六";
+        }
+        return null;
+    }
+
     private void onNetworkError() {
         LogUtils.dTag(TAG, "onNetworkError");
         mProgressView = mViews.get(mViewPager.getCurrentItem()).findViewById(R.id.progressbar);
@@ -258,6 +302,8 @@ public class ResultAnalyseActivity extends BaseActivity {
         mRefreshButton = mViews.get(mViewPager.getCurrentItem()).findViewById(R.id.refresh);
         mProgressView.setVisibility(View.GONE);
         network_error.setVisibility(View.VISIBLE);
+        sp_area.setEnabled(true);
+        sp_serial.setEnabled(true);
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,7 +362,7 @@ public class ResultAnalyseActivity extends BaseActivity {
     }
 
     private void checkAndPostServer() {
-        if (sArea != null && sSerie != null) {
+        /*if (sArea != null && sSerie != null) {
             if (!sArea.equals(tempArea) || !sSerie.equals(tempSerie)) {
                 OkhttpUtils.postGetOrgRequest(orgCallback,
                         new ResultData.OrgMap("2018-7-15", "2018-7-16", sArea, sSerie)
@@ -324,7 +370,9 @@ public class ResultAnalyseActivity extends BaseActivity {
                 tempArea = sArea;
                 tempSerie = sSerie;
             }
-        }
+        }*/
+        index = 0;
+        getData();
     }
 
     public void updateView() {
@@ -335,6 +383,8 @@ public class ResultAnalyseActivity extends BaseActivity {
         mAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setVisibility(View.VISIBLE);
+        sp_area.setEnabled(true);
+        sp_serial.setEnabled(true);
     }
 
     private View.OnClickListener info_listener = new View.OnClickListener() {
@@ -351,7 +401,7 @@ public class ResultAnalyseActivity extends BaseActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             sArea = getResources().getStringArray(R.array.gtk_area)[position];
             LogUtils.dTag(TAG, "area select " + sArea);
-            //checkAndPostServer();
+            checkAndPostServer();
         }
 
         @Override
@@ -366,7 +416,7 @@ public class ResultAnalyseActivity extends BaseActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             sSerie = getResources().getStringArray(R.array.gtk_serial)[position];
             LogUtils.dTag(TAG, "series select " + sSerie);
-            //checkAndPostServer();
+            checkAndPostServer();
         }
 
         @Override
@@ -417,8 +467,20 @@ public class ResultAnalyseActivity extends BaseActivity {
         @Override
         public void onItemClick(int position) {
             LogUtils.dTag(TAG, "item click : " + position);
-            Intent intent = new Intent(mContext, OrgDetailsActivity.class);
-            startActivity(intent);
+            if (index < 2) {
+                orgTitle = orgDatas[position].getName();
+                if (index >= 1)
+                    orgSubTitle = orgDatas[position].getSubName();
+                index++;
+                getData();
+            } else {
+                Intent intent = new Intent(mContext, OrgDetailsActivity.class);
+                intent.putExtra("line", title.getText());
+                intent.putExtra("title", orgDatas[position].getName());
+                intent.putExtra("subTitle", orgDatas[position].getSubName());
+                intent.putExtra("time", mViewPager.getCurrentItem());
+                startActivity(intent);
+            }
         }
     };
 }

@@ -42,7 +42,6 @@ public class OrgDetailsActivity extends BaseActivity {
     private static final String TAG = OrgDetailsActivity.class.getSimpleName();
 
     private Context mContext;
-    private TextView mTitle, mBody;
     private ImageView iv_info;
     private Button mRefreshButton;
     private ListView detail_list;
@@ -74,6 +73,8 @@ public class OrgDetailsActivity extends BaseActivity {
         mContext = this;
         setContentView(R.layout.activity_barchart);
 
+        Intent intent = getIntent();
+
         mHandler = new Handler();
         network_error = (View) findViewById(R.id.network_error);
         mRefreshButton = findViewById(R.id.refresh);
@@ -86,12 +87,31 @@ public class OrgDetailsActivity extends BaseActivity {
 
         mProgressView = findViewById(R.id.progressbar);
 
-        mTitle = (TextView) findViewById(R.id.title);
-        mTitle.setText(R.string.OLE_Total_Title);
+        TextView mTitle = (TextView) findViewById(R.id.title);
+        mTitle.setText(intent.getStringExtra("line"));
+
         iv_info = (ImageView) findViewById(R.id.info);
         iv_info.setClickable(true);
         iv_info.setOnClickListener(info_listener);
-        mBody = (TextView) findViewById(R.id.subbody);
+
+        TextView mLine = findViewById(R.id.org_title);
+        mLine.setText(intent.getStringExtra("title"));
+        TextView mBody = (TextView) findViewById(R.id.subbody);
+        mBody.setText(intent.getStringExtra("subTitle"));
+        TextView mTime = findViewById(R.id.time);
+        int item = intent.getIntExtra("time", 0);
+        switch (item) {
+            case 0:
+                mTime.setText("(" + getString(R.string.DAY) + ")");
+                break;
+            case 1:
+                mTime.setText("(" + getString(R.string.WEEK) + ")");
+                break;
+            case 2:
+                mTime.setText("(" + getString(R.string.MONTH) + ")");
+                break;
+        }
+
         mChart = (BarChart) findViewById(R.id.chart);
         detail_list = (ListView) findViewById(R.id.detail_list);
         detail_list.setClickable(false);

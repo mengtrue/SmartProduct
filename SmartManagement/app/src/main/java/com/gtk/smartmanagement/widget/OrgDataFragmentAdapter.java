@@ -41,6 +41,13 @@ public class OrgDataFragmentAdapter extends RecyclerView.Adapter {
         orgViewHolder.mTxResultValue.setText(orgDatas[position].getValue());
         orgViewHolder.mIvResultPng.setImageResource(R.drawable.up);
         orgViewHolder.mTxResultName.setText(orgDatas[position].getName());
+        String subName = orgDatas[position].getSubName();
+        if (subName != null) {
+            orgViewHolder.mTxResultSubName.setText(subName);
+            orgViewHolder.mTxResultSubName.setVisibility(View.VISIBLE);
+        } else {
+            orgViewHolder.mTxResultSubName.setVisibility(View.GONE);
+        }
         orgViewHolder.badge.setBadge(true);
     }
 
@@ -60,7 +67,7 @@ public class OrgDataFragmentAdapter extends RecyclerView.Adapter {
         public int position;
         private CardView cardView;
         public GtkBadge badge;
-        public TextView mTxResultValue, mTxResultName;
+        public TextView mTxResultValue, mTxResultName, mTxResultSubName;
         public ImageView mIvResultPng;
 
         public OrgViewHolder(View view) {
@@ -69,6 +76,7 @@ public class OrgDataFragmentAdapter extends RecyclerView.Adapter {
             cardView.setOnClickListener(this);
             mTxResultValue = (TextView) view.findViewById(R.id.result_num);
             mTxResultName = (TextView) view.findViewById(R.id.result_name);
+            mTxResultSubName = view.findViewById(R.id.result_sub_name);
             mIvResultPng = (ImageView) view.findViewById(R.id.result_png);
             badge = (GtkBadge) view.findViewById(R.id.badge);
         }
